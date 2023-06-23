@@ -1,0 +1,360 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:.5in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:.5in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:.5in .5in .5in .5in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b><u>Fhf2WT and Fhf2KO Nociceptor Models</u></b></p>
+
+<p class=MsoNormal>Posted by Mitchell Goldfarb</p>
+
+<p class=MsoNormal>Publication Reference: DOI:<span style='font-size:10.5pt;
+line-height:107%;font-family:"Arial",sans-serif;color:#3B3030;background:white'>
+10.1097/j.pain.0000000000002822</span></p>
+
+<p class=MsoNormal>The Fhf2WT and Fhf2KO nociceptor models are described in
+Marra et al, Pain 2023, and explore the effects of FHF2-mediated altered sodium
+channel inactivation gating on heat-induced nociceptor excitation.  The
+modeling is based upon recordings of sodium currents in the presence and
+absence of FHF2 protein, the observation that Fhf2-deficient nociceptors are
+insensitive to heat stimulation, and C-fiber conduction block in Fhf2-deficient
+saphenous nerves above 41oC. The wild-type (Fhf2WT) and mutant (Fhf2KO) models
+differ only in the inactivation gating parameters of tetrodotoxin-sensitive
+(nattxs) and tetrodotoxin-resistant (nav1p8) sodium conductances without
+altering the current densities of these conductances.  I created these models
+by modification of the existing nociceptor model (ModelDB Accession #266850) as
+published in Barkai et al, J.Neurosci. 40:9346, 2020.  The TTX-sensitive sodium
+conductance was converted to two Markov models (nattxs_withF and nattxs_noF),
+while the Nav1.8-like sodium conductance has inactivation (h) parameters
+modified in the Fhf2WT vs Fhf2KO models.</p>
+
+<p class=MsoNormal>In addition to the differences between the Fhf2WT and Fhf2KO
+models, several additional modifications were made equivalently to both models:</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>1)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>In the
+original Barkai model 266850, the main peripheral axon (peri) with 0.8 micron
+diameter and the base of the terminal branch network (ter[0]) with 0.25 micron
+diameter are connected by a tapering element (cone) of 3 micron length.  For
+retrograde conduction of actions potentials, this cone is a severe source/sink
+mismatch.  While wild-type nociceptor generates enough sodium current during
+action potentials to conduct through the cone, action potentials in the Fhf2KO
+nociceptor experience conduction block at the cone.  Since the cone element is
+a structurally unrealistic architectural element, I replaced the cone with a
+very gradual tapering of the peripheral axon to the terminal axon over a length
+of 5 millimeters.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>2)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>In the
+original Barkai model, all gated channel models have a Q10 temperature scaling
+factor.  Since I wished to examine the effects of heating in only the distal
+terminal branches of the nociceptors, the channel models required modification,
+since temperature (celsius) is a global variable. These new channel models
+apply a new term (localtemp) which enables localtemp_nav1p8, localtemp_km, etc.
+to be individually set in each cell compartment within the startup file
+Terminal Proj Main.hoc.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>3)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>In the
+original Barkai model, the densities of all channel conductances are unvaried
+throughout the cell, with the exception of their absence from the terminal tip
+segments (Navless).  In the Fhf2WT and Fhf2KO model cells, the conductance
+density (gbar) of nav1p8 is ~15-fold higher in terminal segments 3-26 than in
+the rest of the cell.</p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>4)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>In the
+Fhf2WT and Fhf2KO models, I created acutely dissociated neuron variant models
+by disconnecting the soma from the stem and by setting gbar for nav1p8 to a
+level intermediate between its values in the soma and terminal branches of the
+intact models.</p>
+
+<p class=MsoNormal><b>Instructions for running model simulations</b></p>
+
+<p class=MsoNormal>This model deposit contains ten folders, consisting of
+Fhf2WT and Fhf2KO models each analyzed under five simulation conditions, as
+described below.</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>A)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><u>Fhf2WT and
+Fhf2KO neurons with heated distal terminals and current injection (“thermal
+nociception”):</u></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Extract
+all files/folders from zip file Fhf2WTandKONociceptors.zip</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+folder WT or FHF2KO Model Terminal Stimulation and Heating</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Build all
+MOD files using mknrndll.exe</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+Terminal Proj Main .hoc file</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load hoc/Capsaicin_stimulation.hoc</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load session/AllTerminalVoltages.ses</p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From Run
+Control GUI, click Init &amp; Run.</p>
+
+<p class=MsoNormal style='margin-left:.25in'>The simulation sets localtemp for
+all channel models in most distal terminal branches to 45oC, and leaves
+localtemp through the rest of neuron compartments to 37oC.  The embedded
+capsaicin stimulation hoc injects increasing current ramp into the gated
+channel-free (Navless) distal tip compartments starting at 0.5 sec and
+continuing for 1.7 sec, followed by down ramp.  Results windows include voltage
+in terminal segments and at the central axon adjacent to the soma.  A train of
+retrograde-propagating action potentials is induced by terminal stimulation of
+WT model, but not in the Fhf2KO model.</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>B)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span><u>Fhf2WT
+and Fhf2KO neurons without heating and distal current injection
+(“mechanonociception”):</u></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Extract
+all files/folders from zip file Fhf2WTandKONociceptors</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+folder WT or FHF2KO Model Terminal Stimulation Without Heating</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Build all
+MOD files using mknrndll.exe</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+Terminal Proj Main .hoc file</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load hoc/Capsaicin_stimulation.hoc</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load session/AllTerminalVoltages.ses</p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From Run
+Control GUI, click Init &amp; Run.</p>
+
+<p class=MsoNormal>The simulation sets localtemp for all channel models to 37oC
+in all compartments.  The embedded capsaicin stimulation hoc injects increasing
+current ramp into the gated channel-free (Navless) distal tip compartments
+starting at 0.5 sec and continuing for 1.7 sec, followed by down ramp.  Results
+windows include voltage in terminal segments and at the central axon adjacent
+to the soma.  A train of retrograde-propagating action potentials is induced by
+terminal stimulation in both models.</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>C)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span><u>Fhf2WT
+and Fhf2KO axon stimulation and conduction at 37oC</u></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Extract
+all files/folders from zip file Fhf2WTandKO Nociceptors</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+folder WT or FHF2KO Model Axon Stimulation 37oC</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Build all
+MOD files using mknrndll.exe</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+Terminal Proj Main .hoc file</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load session/AxonStimulation.ses</p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From Run
+Control GUI, click Init &amp; Run.</p>
+
+<p class=MsoNormal style='margin-left:.25in'>The simulation sets localtemp for
+all channel models to 37oC in all compartments.  The axon stimulation session
+positions an electrode at the midpoint of axon compartment peri[0] and applies
+a sharp current pulse at 100 msec.  The graph reports voltage at the
+stimulation site and distally in 1 mm increments. Both Fhf2WT and Fhf2KO axon
+can conduct an action potential at 37oC</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>D)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><u>Fhf2WT and
+Fhf2KO axon stimulation and conduction at 44oC</u></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Extract
+all files/folders from zip file Fhf2WTandKO Nociceptors</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+folder WT or FHF2KO Model Axon Stimulation 44oC</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Build all
+MOD files using mknrndll.exe</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+Terminal Proj Main .hoc file</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load session/AxonStimulation.ses</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.75in;text-indent:-.25in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From Run
+Control GUI, click Init &amp; Run.</p>
+
+<p class=MsoNormal style='margin-left:.25in'>The simulation sets localtemp for
+all channel models to 44oC in all compartments.  The axon stimulation session
+positions an electrode at the midpoint of axon compartment peri[0] and applies
+a sharp current pulse at 100 msec.  The graph reports voltage at the
+stimulation site and distally in 1 mm increments. While Fhf2WT axon conducts
+the action potential at 44oC faster than at 37oC, the Fhf2KO axon experiences
+conduction block.</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>E)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span><u>Fhf2WT
+and Fhf2KO acutely dissociated neurons and heat stimulation at 45oC</u></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Extract
+all files/folders from zip file Fhf2WTandKO Nociceptors</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+folder WT or FHF2KO Model Dissociated Neuron with Heating</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Build all
+MOD files using mknrndll.exe</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Open
+Terminal Proj Main .hoc file</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load hoc/SOMA­_Capsaicin_stimulation.hoc</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From
+NEURON Main Menu GUI, open File/load session/SomaStimulation.ses</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.75in;text-indent:-.25in'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>From Run
+Control GUI, click Init &amp; Run</p>
+
+<p class=MsoNormal style='margin-left:.5in'>The simulation isolates the soma
+from axonal processes, sets soma localtemp for all channel models to 45oC, and
+injects increasing current ramp into the soma starting at 0.5 sec and
+continuing for 1.7 sec, followed by down ramp.  Somatic voltage is plotted. 
+Both Fhf2WT and Fhf2KO soma generate spike trains at 45oC in response to
+somatic current injection.</p>
+
+<p class=MsoListParagraphCxSpFirst>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpLast>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

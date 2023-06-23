@@ -1,0 +1,107 @@
+// ALL
+
+// Which Navlesses to stimulate 
+objectvar stim[NavLessNum]
+
+objref NavLessStim_vec
+NavLessStim_vec = new Vector()
+
+NavLessStim_vec.indgen(0,NavLessNum-1,1) //For stimulating ALL NavLesses
+//NavLessStim_vec.append(0) //For specific Navlesses. Initiated to stimulating Nevless[0] but can be assigned to any (e.g. ...append(2,5) to stimulate NavLess 2 and 5)
+
+							
+for i=0,NavLessStim_vec.size-1{	
+	q=NavLessStim_vec.x[i]
+	print "Stimuating NavLess (",q,")"
+	NavLess[q] stim[q] = new Caps_Puff(0.005)
+
+		stim[q].onset = 500
+		stim[q].tau_act = 2e6
+		stim[q].tau_inact = 1000
+		stim[q].gmax = 75   // original 250    was 150 on 10/22
+		stim[q].X = 1e-6
+		stim[q].pump = 1700   // original 1200
+}
+
+
+// Changing g_trans for the relevant terminals
+// Note: The model begins with that all terminals and NavLesses have g_trans in them
+// The loop will go over all the NavLesses. If a NavLess exist in the NavLessStim_vec ('vec.contains') it will go on to the next one
+
+for i=0,NavLessNum-1{
+	if (NavLessStim_vec.contains(i)==1){
+	i
+	} else{
+	if (i==0){
+	NavLess[i].g_transducer_pas=0
+	terminal[26].g_transducer_pas=0
+	}		
+	if (i==1){
+	NavLess[i].g_transducer_pas=0
+	terminal[25].g_transducer_pas=0
+	}
+	if (i==2){
+	NavLess[i].g_transducer_pas=0
+	terminal[23].g_transducer_pas=0
+	}
+	if (i==3){
+	NavLess[i].g_transducer_pas=0
+	terminal[21].g_transducer_pas=0
+	}
+	if (i==4){
+	NavLess[i].g_transducer_pas=0
+	terminal[20].g_transducer_pas=0
+	}
+	if (i==5){
+	NavLess[i].g_transducer_pas=0
+	terminal[19].g_transducer_pas=0
+	}
+	if (i==6){
+	NavLess[i].g_transducer_pas=0
+	terminal[17].g_transducer_pas=0
+	}
+	if (i==7){
+	NavLess[i].g_transducer_pas=0
+	terminal[16].g_transducer_pas=0
+	}
+	if (i==8){
+	NavLess[i].g_transducer_pas=0
+	terminal[14].g_transducer_pas=0
+	}
+	if (i==9){
+	NavLess[i].g_transducer_pas=0
+	terminal[13].g_transducer_pas=0
+	}
+	if (i==10){
+	NavLess[i].g_transducer_pas=0
+	terminal[12].g_transducer_pas=0
+	}
+	if (i==11){
+	NavLess[i].g_transducer_pas=0
+	terminal[11].g_transducer_pas=0
+	}
+	if (i==12){
+	NavLess[i].g_transducer_pas=0
+	terminal[6].g_transducer_pas=0
+	}
+	if (i==13){
+	NavLess[i].g_transducer_pas=0
+	terminal[5].g_transducer_pas=0
+	}
+	}
+}
+
+/*
+objref Central_V, NewFile_Central
+Central_V = new Vector()
+central Central_V.record(&v(0.995))
+run()
+		
+strdef filename1
+sprint(filename1, "%dps Cap (All) ENHANCED_SUMM_MODEL L is %d xRa is %d", 150,50*SF,Rorg)
+		
+NewFile_Central = new File(filename1)
+NewFile_Central.wopen(filename1)
+Central_V.printf(NewFile_Central)
+NewFile_Central.close()
+*/

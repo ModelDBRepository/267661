@@ -1,0 +1,15 @@
+// ALL
+
+// Stimulate only the soma with Caps_puff
+objref soma_stim
+soma soma_stim = new Caps_Puff(0.005)
+soma_stim.onset = 500
+soma_stim.tau_act = 2e6
+soma_stim.tau_inact = 1000
+soma_stim.gmax = 1200   // original 250    was 150 on 10/22
+soma_stim.X = 1e-6
+soma_stim.pump = 1700  // original 1200
+
+stem.Ra=100000000000  // isolates the soma from the rest of the neuron
+
+// soma.gbar_nav1p8 = 0.0285  //  raises ttx-r conductance in soma to level in afferent terminals

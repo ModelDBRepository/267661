@@ -1,0 +1,286 @@
+load_file("nrngui.hoc")
+
+//The user can stimulate the terminals with capsaicin by adjusting Capsaicin_stimulation.hoc and uncommenting the last line of this file.
+
+celsius = 25
+
+//
+// Nociceptive terminal model 
+//
+// Barkai et al. 2020 
+// 
+
+//////////////////// VARIABLES /////////////////////
+
+tstop = 3000
+CENTRAL_DIAM = 0.4
+
+/////////////////   MORPHOLOGY ///////////////////////
+
+// Soma is electrically disconnected from stem and axon by increasing stem resistance to 10,000,000
+
+Term_Branch = 27//Number of Terminal Branches
+Peri_Seg = 6// Number peripheral axon regions
+Term_Length = 1000 //Terminal Branches length
+NavLessNum=14 
+NavLessLength=35
+SF=1 //Scaling factor for terminal 
+				
+				print NavLessLength
+				CENTRAL_DIAM = 0.4
+				//create soma, central,terminal[Term_Branch], peri, tjcentral, tjperi, stem, cone, NavLess[NavLessNum]
+				create soma, central,terminal[Term_Branch], peri[Peri_Seg], tjcentral, tjperi, stem, cone, NavLess[NavLessNum]
+				l_seg = 10 //segment size
+				l_seg_skinterminal = 5 //segment size for terminals (for more accuracy)
+
+				peri[0] {nseg=100 L=5000 diam = .8}		// peripherial axon
+				peri[1] {nseg=10 L=100 diam = .7}
+				peri[2] {nseg=10 L=100 diam = .6}
+				peri[3] {nseg=10 L=100 diam = .5}
+				peri[4] {nseg=10 L=100 diam = .4}
+				peri[5] {nseg=10 L=100 diam = .3}
+				tjperi {nseg=100 L=100 diam = .8}		   	// tjunction axon
+				tjcentral {nseg=100 L=100 diam = CENTRAL_DIAM}		// tjunction axon
+				central {nseg=100 L=5000 diam = CENTRAL_DIAM}		// central axon
+				stem {nseg=100 L=75 diam = 1.4}				// stem axon
+				soma {nseg=1 L=25 diam =25}				// soma
+
+				Rorg=1 //Mitochondira etc. resistance at terminals 
+
+				//////// Connectivity //////////
+
+				//terminal connect peri(0),1
+				peri[0] connect tjperi(0),1
+				tjperi connect stem(0),1
+				//stem connect soma(0),1  isolated soma
+				tjperi connect tjcentral(0),1
+				tjcentral connect central(0),1
+
+				//Terminal branch morphology and connectivity
+				term_L=100
+				term_nseg=term_L/l_seg   //Dividing the compartment to l size segment 
+				term_diam=0.25
+
+				connect peri[0](0), peri[1](1)
+				connect peri[1](0), peri[2](1)
+				connect peri[2](0), peri[3](1)
+				connect peri[3](0), peri[4](1)
+				connect peri[4](0), peri[5](1)
+				connect peri[5](0), terminal[0](1)
+				// connect terminal[0](1), cone(0)
+				// connect peri(0), cone(1)
+				terminal[0]{nseg=term_nseg L=term_L diam=term_diam}
+					
+				// Terminal Morphology
+					terminal[0] {nseg=term_nseg L=300*SF diam=term_diam}
+					terminal[1] {nseg=term_nseg L=120*SF diam=term_diam}
+					terminal[2] {nseg=term_nseg L=120*SF diam=term_diam}
+					terminal[3] {nseg=term_nseg L=400*SF diam=term_diam}
+					terminal[4] {nseg=term_nseg L=250*SF diam=term_diam}
+					terminal[5] {nseg=term_nseg L=95*SF-NavLessLength diam=term_diam}
+					terminal[6] {nseg=term_nseg L=175*SF-NavLessLength diam=term_diam} 
+					terminal[7] {nseg=term_nseg L=40*SF diam=term_diam}
+					terminal[8] {nseg=term_nseg L=40*SF diam=term_diam}
+					terminal[9] {nseg=term_nseg L=40*SF diam=term_diam}
+					terminal[10] {nseg=term_nseg L=160*SF diam=term_diam}
+					terminal[11] {nseg=term_nseg L=100*SF-NavLessLength diam=term_diam}
+					terminal[12] {nseg=term_nseg L=100*SF-NavLessLength diam=term_diam}
+					terminal[13] {nseg=term_nseg L=100*SF-NavLessLength diam=term_diam}
+					terminal[14] {nseg=term_nseg L=100*SF-NavLessLength diam=term_diam}
+					terminal[15] {nseg=term_nseg L=350*SF diam=term_diam}
+					terminal[16] {nseg=term_nseg L=175*SF-NavLessLength diam=term_diam}
+					terminal[17] {nseg=term_nseg L=185*SF-NavLessLength diam=term_diam}
+					terminal[18] {nseg=term_nseg L=85*SF diam=term_diam}
+					terminal[19] {nseg=term_nseg L=200*SF-NavLessLength diam=term_diam}
+					terminal[20] {nseg=term_nseg L=200*SF-NavLessLength diam=term_diam}
+					terminal[21] {nseg=term_nseg L=155*SF-NavLessLength diam=term_diam}
+					terminal[22] {nseg=term_nseg L=200*SF diam=term_diam}
+					terminal[23] {nseg=term_nseg L=150*SF-NavLessLength diam=term_diam}
+					terminal[24] {nseg=term_nseg L=80*SF diam=term_diam}
+					terminal[25] {nseg=term_nseg L=75*SF-NavLessLength diam=term_diam}
+					terminal[26] {nseg=term_nseg L=180*SF-NavLessLength diam=term_diam}
+					
+					
+					connect terminal[1](1),terminal[0](0)	
+					connect terminal[2](1),terminal[0](0) 
+					connect terminal[3](1),terminal[1](0)	
+					connect terminal[4](1),terminal[1](0) 
+					connect terminal[5](1),terminal[2](0)
+						connect NavLess[13](1), terminal[5](0)
+					connect terminal[6](1),terminal[2](0)
+						connect NavLess[12](1), terminal[6](0)
+					connect terminal[7](1),terminal[3](0)	
+					connect terminal[8](1),terminal[3](0)
+					connect terminal[9](1),terminal[4](0)	
+					connect terminal[10](1),terminal[4](0)	
+					connect terminal[11](1),terminal[7](0)//skin
+						connect NavLess[11](1), terminal[11](0)
+					connect terminal[12](1),terminal[7](0)//skin
+						connect NavLess[10](1), terminal[12](0)
+					connect terminal[13](1),terminal[8](0)//skin	
+						connect NavLess[9](1), terminal[13](0)
+					connect terminal[14](1),terminal[8](0)//skin	
+						connect NavLess[8](1), terminal[14](0)	
+					connect terminal[15](1),terminal[9](0)	
+					connect terminal[16](1),terminal[9](0)
+						connect NavLess[7](1), terminal[16](0)
+					connect terminal[17](1),terminal[10](0)
+						connect NavLess[6](1), terminal[17](0)
+					connect terminal[18](1),terminal[10](0)		
+					connect terminal[19](1),terminal[15](0)//skin
+						connect NavLess[5](1), terminal[19](0)	
+					connect terminal[20](1),terminal[15](0)//skin
+						connect NavLess[4](1), terminal[20](0)
+					connect terminal[21](1),terminal[18](0)	
+						connect NavLess[3](1), terminal[21](0)
+					connect terminal[22](1),terminal[18](0)		
+					connect terminal[23](1),terminal[22](0)//skin
+						connect NavLess[2](1), terminal[23](0)	
+					connect terminal[24](1),terminal[22](0)
+					connect terminal[25](1),terminal[24](0)//skin
+						connect NavLess[1](1), terminal[25](0)
+					connect terminal[26](1),terminal[24](0)//skin
+						connect NavLess[0](1), terminal[26](0)
+					
+					
+
+				objref DRG   					// create new object called DRG
+				DRG = new SectionList()				// Define DRG as a list of sections
+
+				tjperi DRG.append()				// DRG sections: tjunction, stem, and soma   
+				tjcentral DRG.append()  
+				stem DRG.append()				
+				soma DRG.append()
+
+				objref TermSec						// create new object called TermSec for terminals
+				TermSec = new SectionList()	  					
+					cone TermSec.append()
+					for i=0, Term_Branch-1 { 	
+							terminal[i] TermSec.append()
+					}
+					
+				objref NavLessSec
+				NavLessSec = new SectionList()	  					
+					for i=0, NavLessNum-1 { 	
+							NavLess[i] NavLessSec.append()
+					}
+					
+				objref TermSkin	                    // Skin inervating Terinals (for Goldstein et al.)
+				TermSkin = new SectionList()	
+					terminal[26] TermSkin.append()
+					terminal[25] TermSkin.append()
+					terminal[23] TermSkin.append()
+					terminal[21] TermSkin.append()
+					terminal[20] TermSkin.append()
+					terminal[19] TermSkin.append()
+					terminal[17] TermSkin.append()
+					terminal[16] TermSkin.append()
+					terminal[14] TermSkin.append()
+					terminal[13] TermSkin.append()
+					terminal[12] TermSkin.append()
+					terminal[11] TermSkin.append()
+					terminal[5] TermSkin.append()
+					terminal[6] TermSkin.append()
+					
+
+
+
+				/////////////////// INITIALIZATION /////////////////
+				 
+
+				///// GENERAL INITIALIZATION /////////
+
+				forall{				// for all compartments
+						insert na_ion  //A bug fix for point_process 
+						insert k_ion   //A bug fix for point_process
+					   
+					   //Na Channels 
+					  insert nattxs_withF
+							gnabar_nattxs_withF = 0.006632
+						insert nattxs_noF
+							gnabar_nattxs_noF = 0.01979
+					   insert nav1p9
+							gbar_nav1p9=0.0003
+					   insert nav1p8
+							gbar_nav1p8=0.02   // was 0.01  // on 10/22 adjusted to 0.003
+							// reduce to 0.006 beyond terminals
+						insert nap
+							gbar_nap=5e-5
+					   
+					   
+					   //K Channels
+					   insert kdr
+							gbar_kdr=0.0007
+					   insert ka
+							gkbar_ka=0.004   // was 0.0015
+					   insert km
+							gbar_km=0.0004
+					   //insert kf
+					   
+						//Ca channels
+						insert calL_Shah
+							gcalbar_calL_Shah=0.0015  // was 0.003
+						insert calT_Shah 
+							gcatbar_calT_Shah=0.0005   // was 0.001
+						//H channels
+						insert hd	
+							ghdbar_hd=0.00015
+
+						
+					insert pas			// insert leak channels	
+					g_pas =1/10000	 //set Rm = 10000 ohms-cm2
+					v = -60				// set Vrest
+					e_pas = -60
+					Ra = 150			// intracellular resistance
+				}
+
+				// Lower Nav density away from periphery
+				
+				// soma.gbar_nattxs=0.014
+				// stem.gbar_nattxs=0.014
+				// central.gbar_nattxs=0.014
+				// tjcentral.gbar_nattxs=0.014
+				//tjperi.gbar_nattxs=0.014
+				// for i=0,5 {peri[i].gbar_nattxs=0.014}				
+
+				// soma.gbar_nav1p8=0.006
+				// stem.gbar_nav1p8=0.006
+				// central.gbar_nav1p8=0.006
+				// tjcentral.gbar_nav1p8=0.006
+				// tjperi.gbar_nav1p8=0.006
+				// for i=0,5 {peri[i].gbar_nav1p8=0.006}				
+				
+				// Electrically Isolate Soma from Axon
+				stem.Ra = 10000000
+				
+				// Heating Soma
+				soma.localtemp_nattxs_withF = 45
+				soma.localtemp_nattxs_noF = 45
+				soma.localtemp_nav1p8 = 45
+				soma.localtemp_nav1p9 = 45
+				soma.localtemp_ka = 45
+				soma.localtemp_kdr = 45
+				soma.localtemp_km = 45
+				soma.localtemp_hd = 45
+				
+
+				
+
+				proc init(){				// INITIALIZATION FUNCTION
+						dt=0.05 //0.1 
+
+				  forall {
+					   v=-60 // VREST FOR ALL COMPARTMENTS (Change to -54mV to get rid of the spontaneous first spike)
+					   ena=60
+					   ek=-85
+					   ehd_hd=-20
+					   
+					 
+					   finitialize(v)			// reset all state variables
+					   fcurrent()     			// calculate all currents
+					   }
+				}			/// end of initialization
+		
+
+			//The user can also choose which terminals to stimulate by changing Capsaicin_stimulation.hoc file and uncommenting the next line
+			//load_file("Capsaicin_stimulation.hoc") // puts the electrodes in specific or all terminals	
